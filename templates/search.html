@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="my-main-section">
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="my-form-group">
+                <legend class="my-border-bottom my-border-top mb-4">Add Book</legend>
+                <div class="my-form-group">
+                    {{ form.book_name.label(class="my-form-control-label") }}
+                    {% if form.book_name.errors %}
+                        {{ form.book_name(class="my-form-control my-form-control-lg is-invalid my-text-box") }}
+                        <div class="my-invalid-feedback">
+                            {% for error in form.book_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.book_name(class="my-form-control my-form-control-lg my-text-box") }}
+                    {% endif %}
+                </div>
+                <div class="my-form-group">
+                    {{ form.submit(class="my-btn my-btn-outline-info") }}
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock content %}

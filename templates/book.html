@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="my-main-section">
+    <div class="my-book-info">
+        <h1> {{  title }} </h1>
+        <img src="{{ url_for('static', filename='profile_pics/' + image_file) }}" alt="Book Image">
+        <p><strong>Author:</strong> {{ author }}</p>
+        <p><strong>Content:</strong> {{ content }}</p>
+        <form action="/borrow" method="POST">
+            <input type="hidden" id="bookname" name="bookname" value="{{ title }}">
+            <button type="submit" class="borrow-button">Borrow Book</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

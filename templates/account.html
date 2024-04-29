@@ -1,0 +1,86 @@
+{% extends "layout.html" %}
+{% block content %}
+<style>
+    .my-main-section-account, .my-table-section {
+        display: inline-block;
+        vertical-align: top;
+    }
+</style>
+    <div class="my-main-section-account">
+        <div class="media">
+            <img class="rounded-circle account-img" src={{ image_file }}>
+            <div class="media-body">
+                <h2 class="account-heading">{{ current_user.username }}</h2>
+                <p class="text-secondary">{{ current_user.email }}</p>
+            </div>
+        </div>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <fieldset class="my-form-group" style="float:left">
+                <legend class="my-border-bottom ">Account Info</legend>
+                <div class="my-form-group">
+                    {{ form.username.label(class="my-form-control-label") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class="my-form-control my-form-control-lg is-invalid my-text-box") }}
+                        <div class="my-invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class="my-form-control my-form-control-lg my-text-box") }}
+                    {% endif %}
+                </div>
+                <div class="my-form-group">
+                    {{ form.email.label(class="my-form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="my-form-control my-form-control-lg is-invalid my-text-box") }}
+                        <div class="my-invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="my-form-control my-form-control-lg my-text-box") }}
+                    {% endif %}
+                </div>
+                <div class="my-form-group">
+                    {{ form.picture.label() }}
+                    {{ form.picture(class="my-form-control-file") }}
+                    {% if form.picture.errors %}
+                        {% for error in form.picture.errors %}
+                            <span class="text-danger">{{ error }}</span><br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            
+            <div class="my-form-group">
+                {{ form.submit(class="my-btn my-btn-outline-info") }}
+            </div>
+        </form>
+    </fieldset>
+    </div>
+    <div class="my-table-section" style="float:right">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Book Name</th>
+                    <th>Issue Date</th>
+                    <th>Return Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for data in borrow_data %}
+                <tr>
+                    <td>{{ loop.index }}</td>  
+                    <td>{{ data.book_name }}</td>  
+                    <td>{{ data.date_borrowed.strftime('%Y-%m-%d') }}</td>  
+                    <td>{{ data.due_date.strftime('%Y-%m-%d') }}</td> 
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+{% endblock content %}

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenAI Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #FFA500, #FF6347); 
+            background-size: 400% 400%; /* Background size */
+            animation: gradient 15s ease infinite; /* Animation */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Increased shadow */
+            padding: 30px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        #output {
+            margin-top: 20px;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .btn-primary {
+            background-color: #1e90ff; /* Darker blue button */
+            border-color: #1e90ff; /* Darker blue border */
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #1565c0; /* Darker shade on hover */
+            border-color: #1565c0; /* Darker shade on hover */
+        }
+
+        .spinner-border {
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+        }
+
+        .loading-text {
+            font-weight: bold;
+            color: #1e90ff; /* Matching blue color for the loading text */
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mb-4">Chat Bot</h1>
+        <form id="chat-form">
+            <div class="form-group">
+                <label for="user-input">Enter your question:</label>
+                <input type="text" class="form-control" id="user-input" placeholder="Type your question...">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="loading mt-3" id="loading" style="display: none;">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                <span class="loading-text">Loading...</span>
+            </div>
+        </form>
+        <div id="output" class="mt-4"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#chat-form").submit(function(event) {
+                event.preventDefault();
+                var userInput = $("#user-input").val();
+                $("#loading").show(); // Show loading spinner
+                $.ajax({
+                    type: "POST",
+                    url: "/process",
+                    contentType: "application/json",
+                    data: JSON.stringify({"user_input": userInput}),
+                    success: function(response) {
+                        $("#loading").hide(); // Hide loading spinner
+                        $("#output").html(response.output);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

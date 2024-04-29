@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <div class="container-fluid d-flex justify-content-center align-items-center overflow-hidden" style="height: 100vh; overflow: hidden;">
+    <div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-style gradient-orange">
+            <div class="card-body">
+              <h5 class="card-title text-white">Add New Book</h5>
+              <p class="card-text text-white">Easily add a new book to the collection.</p>
+              <a href="{{ url_for('addbook') }}" class="btn btn-light">Add Book</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-style gradient-red">
+            <div class="card-body">
+              <h5 class="card-title text-white">Total Number of Books</h5>
+              <p class="card-text text-white">Keep track of the total number of books in the library.</p>
+              <p class="lead text-center">{{ total_books }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

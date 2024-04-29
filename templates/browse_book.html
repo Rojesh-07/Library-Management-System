@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>List of Books</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Author</th>
+        <th>Cover Image </th>
+    </tr>
+    {% for book in borrow_book %}
+    <tr>
+        <td>{{ book.id }}</td>
+        <td>{{ book.name }}</td>
+        <td>{{ book.author }}</td>
+        <td>    
+            <a href="{{ url_for('show_book', book_id=book.id) }}">
+                <img src="{{ url_for('static', filename='profile_pics/' + book.image_file) }}" alt="Book Image">
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
